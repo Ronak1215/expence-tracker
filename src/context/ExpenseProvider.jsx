@@ -1,12 +1,25 @@
-import React, { Children, createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 export const ExpenseContext = createContext();
 const ExpenseProvider = ({ children }) => {
-  const [expense, setExpense] = useState([]);
+  const [expense, setExpense] = useState(() => {
+    try {
+      const stored = localStorage.getItem("expenses");
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  });
+  
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("expenses",JSON.stringify(expense))
+  }, [expense])
+  
 
   // const addExpense = (e) => {
   //   e.preventDefault();
