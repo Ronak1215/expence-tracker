@@ -1,10 +1,18 @@
-function App() {
+import { useContext } from "react";
+import ExpenseForm from "./components/ExpenseForm"
+import ExpenseList from "./components/ExpenseList"
+import { ExpenseContext } from "./context/ExpenseProvider";
 
+function App() {
+  const { addExpense } = useContext(ExpenseContext);
   return (
     <>
-      <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+       <ExpenseForm
+        onSubmit={addExpense}
+        submitLabel="+ Add Expense"
+      />
+      <ExpenseList/>
+      
     </>
   )
 }
